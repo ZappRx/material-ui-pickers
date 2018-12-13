@@ -243,7 +243,7 @@ export class DateTextField extends React.PureComponent<DateTextFieldProps> {
 
     const oldValue = utils.date(this.state.value);
     const newValue = utils.parse(value, format);
-    const error = getError(newValue, this.props);
+    const error = showError ? getError(newValue, this.props) : '';
 
     this.setState(
       {

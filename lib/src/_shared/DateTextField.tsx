@@ -21,6 +21,7 @@ const getDisplayDate = ({
   invalidLabel,
   emptyLabel,
   labelFunc,
+  showError,
 }: DateTextFieldProps) => {
   const isEmpty = value === null;
   const date = utils.date(value);
@@ -29,7 +30,7 @@ const getDisplayDate = ({
     return labelFunc(isEmpty ? null : date, invalidLabel!);
   }
 
-  if (isEmpty) {
+  if (isEmpty || !showError) {
     return emptyLabel;
   }
 
@@ -46,11 +47,13 @@ const getError = (value: MaterialUiPickersDate, props: DateTextFieldProps): Reac
     maxDateMessage,
     minDateMessage,
     invalidDateMessage,
+    showError,
   } = props;
-
-  if (!utils.isValid(value)) {
+  console.warn(value);
+  console.warn(value.length);
+  if (!utils.isValid(value) && value.length >= 10) {
     // if null - do not show error
-    if (utils.isNull(value)) {
+    if (utils.isNull(value) || !showError) {
       return '';
     }
 
@@ -225,7 +228,7 @@ export class DateTextField extends React.PureComponent<DateTextFieldProps> {
   }
 
   public commitUpdates = (value: string) => {
-    const { onChange, clearable, onClear, utils, format, onError } = this.props;
+    const { onChange, clearable, onClear, utils, format, onError, showError } = this.props;
 
     if (value === '') {
       if (this.props.value === null) {
@@ -239,7 +242,7 @@ export class DateTextField extends React.PureComponent<DateTextFieldProps> {
 
     const oldValue = utils.date(this.state.value);
     const newValue = utils.parse(value, format);
-    const error = getError(newValue, this.props);
+    const error = showError ? getError(newValue, this.props) : '';
 
     this.setState(
       {

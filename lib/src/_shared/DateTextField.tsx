@@ -54,6 +54,9 @@ const getError = (value: MaterialUiPickersDate, props: DateTextFieldProps): Reac
     if (utils.isNull(value) || !showError) {
       return '';
     }
+    if (!showError) {
+      return '';
+    }
 
     return invalidDateMessage;
   }

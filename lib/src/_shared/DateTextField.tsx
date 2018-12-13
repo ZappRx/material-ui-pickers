@@ -21,6 +21,7 @@ const getDisplayDate = ({
   invalidLabel,
   emptyLabel,
   labelFunc,
+  showError,
 }: DateTextFieldProps) => {
   const isEmpty = value === null;
   const date = utils.date(value);
@@ -229,7 +230,7 @@ export class DateTextField extends React.PureComponent<DateTextFieldProps> {
   }
 
   public commitUpdates = (value: string) => {
-    const { onChange, clearable, onClear, utils, format, onError } = this.props;
+    const { onChange, clearable, onClear, utils, format, onError, showError } = this.props;
 
     if (value === '') {
       if (this.props.value === null) {

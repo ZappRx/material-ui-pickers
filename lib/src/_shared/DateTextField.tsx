@@ -46,11 +46,12 @@ const getError = (value: MaterialUiPickersDate, props: DateTextFieldProps): Reac
     maxDateMessage,
     minDateMessage,
     invalidDateMessage,
+    showError,
   } = props;
 
   if (!utils.isValid(value)) {
     // if null - do not show error
-    if (utils.isNull(value)) {
+    if (utils.isNull(value) || !showError) {
       return '';
     }
 

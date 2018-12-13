@@ -29,7 +29,7 @@ const getDisplayDate = ({
     return labelFunc(isEmpty ? null : date, invalidLabel!);
   }
 
-  if (isEmpty) {
+  if (isEmpty || !showError) {
     return emptyLabel;
   }
 
